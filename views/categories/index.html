@@ -1,0 +1,39 @@
+{{ template "/layouts/base.html" . }}
+
+{{ define "content" }}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Categories</h1>
+    <a href="/categories/create" class="btn btn-primary">Create New</a>
+</div>
+
+<form action="/categories" method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search categories..." value="{{ .search }}">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{ range .categories }}
+    <tr>
+        <td>{{ .ID }}</td>
+        <td>{{ .Name }}</td>
+        <td>
+            <a href="/categories/{{ .ID }}" class="btn btn-sm btn-warning">Edit</a>
+            <form action="/categories/delete/{{ .ID }}" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {{ end }}
+    </tbody>
+</table>
+{{ end }}
